@@ -1,0 +1,14 @@
+<template>
+  <input type="text" :placeholder="placeholder" class="rounded-md px-3 py-2 border bg-white cursor-text h-11" />
+</template>
+
+<script lang="ts" setup>
+import { defineProps } from "vue";
+
+defineProps({
+  placeholder: {
+    type: String,
+    required: true
+  }
+})
+</script>
