@@ -17,5 +17,5 @@ export default defineNuxtConfig({
     icons: {
       solid: ['arrow-left', 'arrow-right'],
     },
-  }
+  },
 })

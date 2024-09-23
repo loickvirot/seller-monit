@@ -13,7 +13,8 @@
     "@vesp/nuxt-fontawesome": "^1.1.0",
     "nuxt": "^3.13.0",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "vue-tailwind-datepicker": "^1.7.3"
   },
   "devDependencies": {
     "@fortawesome/free-regular-svg-icons": "^6.6.0",

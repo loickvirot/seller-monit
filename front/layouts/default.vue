@@ -7,11 +7,15 @@
         </h1>
       </div>
       <NavBar>
-        <NavButton label="Team" href="#" :active="true" />
-        <NavButton label="Agenda" href="#" />
-        <NavButton label="Roadmap" href="#" />
+        <NavButton label="Team" href="/team" :active="route.path == '/team'" />
+        <NavButton label="Agenda" href="/agenda" :active="route.path == '/agenda'"/>
+        <NavButton label="Roadmap" href="/roadmap" :active="route.path == '/roadmap'"/>
       </NavBar>
     </div>
     <slot></slot>
   </div>
 </template>
+
+<script lang="ts" setup>
+const route = useRoute()
+</script>
