@@ -7,4 +7,12 @@ export const teamRetriever: TeamRetriever = {
     const res = await executeRequest<Team>("SELECT * FROM team");
     return res.rows;
   },
+  get: async (id: number): Promise<Team> => {
+    const res = await executeRequest<Team>(
+      "SELECT * FROM team WHERE team.id = $1",
+      [id]
+    );
+
+    return res.rows[0];
+  },
 };

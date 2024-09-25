@@ -9,7 +9,20 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   res.json(await teamQuery.getAll());
 });
 
-router.get("/agent", async (req: Request, res: Response): Promise<void> => {
+router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+  const id = Number(req.params.id);
+
+  if (isNaN(id)) {
+    res.status(400);
+    res.json("Bad request");
+    return;
+  }
+
+  res.status(200);
+  res.json(await teamQuery.get(id));
+});
+
+router.get("/:id/agent", async (req: Request, res: Response): Promise<void> => {
   res.status(200);
   res.json(await agentQuery.getAll());
 });
