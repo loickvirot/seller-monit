@@ -1,7 +1,7 @@
 import express from "express";
 import { teamModule } from "../team/module";
 
-const port = 3000;
+const port = 3001;
 
 export function serve(): void {
   const app = express();

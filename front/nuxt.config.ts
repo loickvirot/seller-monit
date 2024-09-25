@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-04-03',
+  compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
 
   postcss: {
     plugins: {
@@ -11,11 +11,17 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@vesp/nuxt-fontawesome'],
+  modules: ["@vesp/nuxt-fontawesome", "nuxt-security"],
 
   fontawesome: {
     icons: {
-      solid: ['arrow-left', 'arrow-right'],
+      solid: ["arrow-left", "arrow-right"],
     },
   },
-})
+
+  security: {
+    corsHandler: {
+      origin: "localhost:3001",
+    },
+  },
+});

@@ -12,6 +12,7 @@
   "dependencies": {
     "@vesp/nuxt-fontawesome": "^1.1.0",
     "nuxt": "^3.13.0",
+    "nuxt-security": "^2.0.0",
     "vue": "latest",
     "vue-router": "latest",
     "vue-tailwind-datepicker": "^1.7.3"
