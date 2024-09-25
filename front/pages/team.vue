@@ -6,7 +6,7 @@
           <InputDefaultSelect>
             <InputOption
               v-for="team in teams"
-              :value="team.id"
+              :value="team.id.toString()"
               :label="team.name"
             ></InputOption>
           </InputDefaultSelect>
@@ -42,7 +42,7 @@ function getPlaceholder(): string {
 }
 
 interface Team {
-  id: string;
+  id: number;
   name: string;
 }
 

@@ -18,3 +18,24 @@ services:
       - 3001:3001
     command: npm run dev
     network_mode: host
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=app
+      - POSTGRES_USER=app
+      - POSTGRES_DB=app
+    ports:
+      - 5432:5432
+    network_mode: host
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    network_mode: host
+
+volumes:
+  postgres:

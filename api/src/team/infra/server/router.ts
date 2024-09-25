@@ -3,7 +3,7 @@ import { getTeamQuery } from "../query/get-team";
 
 export const router = express.Router();
 
-router.get("/", (req: Request, res: Response): void => {
+router.get("/", async (req: Request, res: Response): Promise<void> => {
   res.status(200);
-  res.json(getTeamQuery());
+  res.json(await getTeamQuery());
 });
