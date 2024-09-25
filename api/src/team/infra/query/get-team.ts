@@ -1,7 +1,9 @@
 import { Team } from "../../domain/entity/team";
 import { teamRetriever } from "../repository/team-retriever";
-import { getTeam } from "../../app/query/get-team";
+import { getAllTeams } from "../../app/query/get-team";
 
-export const getTeamQuery = async (): Promise<Team[]> => {
-  return getTeam(teamRetriever);
+export const teamQuery = {
+  getAll: async (): Promise<Team[]> => {
+    return getAllTeams(teamRetriever);
+  },
 };
