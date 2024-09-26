@@ -3,7 +3,7 @@
     <div class="p-4">
       <Card>
         <div class="flex justify-between p-4">
-          <InputDefaultSelect>
+          <InputDefaultSelect v-model="selectedTeam">
             <InputOption
               v-for="team in teams"
               :value="team.id.toString()"
@@ -70,10 +70,27 @@ interface Visit {
   note: string;
 }
 
-// const teams: Team[] = [];
-
 const { data: teams } = await useFetch<Team[]>("http://localhost:3001/team");
-const { data: visits } = await useFetch<Visit[]>("http://localhost:3001/visit");
+
+const selectedTeam = ref(teams.value ? teams.value[0].id.toString() : "");
+watch(selectedTeam, (v: string) => {
+  console.log(v);
+});
+
+const { data: visits } = await useAsyncData<Visit[]>(
+  "cafes",
+  () =>
+    $fetch(`/visit`, {
+      method: "GET",
+      baseURL: "http://localhost:3001",
+      params: {
+        team: selectedTeam.value,
+      },
+    }),
+  {
+    watch: [selectedTeam],
+  }
+);
 
 const graphColors = [
   colors.blue[500],
