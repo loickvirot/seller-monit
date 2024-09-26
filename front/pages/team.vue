@@ -22,6 +22,7 @@
             </ClientOnly>
           </div>
         </div>
+        {{ JSON.stringify(visits) }}
       </Card>
     </div>
   </div>
@@ -46,7 +47,17 @@ interface Team {
   name: string;
 }
 
+interface Visit {
+  id: number;
+  agent: number;
+  start: Date;
+  end: Date;
+  address: string;
+  note: string;
+}
+
 // const teams: Team[] = [];
 
 const { data: teams } = await useFetch<Team[]>("http://localhost:3001/team");
+const { data: visits } = await useFetch<Visit[]>("http://localhost:3001/visit");
 </script>

@@ -1,10 +1,10 @@
 import { type Router } from "express";
 import { router } from "./infra/server/router";
 
-export interface TeamModule {
+export interface VisitModule {
   getRouter: () => Router;
 }
 
-export const teamModule: TeamModule = {
+export const visitModule: VisitModule = {
   getRouter: () => router,
 };
