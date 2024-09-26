@@ -2,7 +2,7 @@
   <div>
     <div class="p-4">
       <Card>
-        <div class="flex justify-between">
+        <div class="flex justify-between p-4">
           <InputDefaultSelect>
             <InputOption
               v-for="team in teams"
@@ -11,7 +11,7 @@
             ></InputOption>
           </InputDefaultSelect>
           <div class="flex space-x-4">
-            <ClientOnly>
+            <client-only>
               <vue-tailwind-datepicker
                 i18n="fr"
                 v-model="dateValue"
@@ -19,10 +19,19 @@
                 :placeholder="getPlaceholder()"
                 as-single
               />
-            </ClientOnly>
+            </client-only>
           </div>
         </div>
-        {{ JSON.stringify(visits) }}
+        <div class="border-b"></div>
+        <div class="divide-y">
+          <TeamTimelineItem
+            v-for="user in users"
+            :key="user.name"
+            :user="user.name"
+            :visits="visits ?? []"
+            :colors="user.color"
+          />
+        </div>
       </Card>
     </div>
   </div>
@@ -31,6 +40,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import dayjs from "dayjs";
+import TeamTimelineItem from "~/components/graph/TeamTimelineItem.vue";
+import colors from "tailwindcss/colors";
 
 const dateValue = ref(dayjs(Date.now()).format("DD MMM YYYY"));
 const formater = ref({
@@ -49,7 +60,10 @@ interface Team {
 
 interface Visit {
   id: number;
-  agent: number;
+  agent: {
+    id: number;
+    name: string;
+  };
   start: Date;
   end: Date;
   address: string;
@@ -60,4 +74,20 @@ interface Visit {
 
 const { data: teams } = await useFetch<Team[]>("http://localhost:3001/team");
 const { data: visits } = await useFetch<Visit[]>("http://localhost:3001/visit");
+
+const graphColors = [
+  colors.blue[500],
+  colors.purple[500],
+  colors.amber[500],
+  colors.green[700],
+];
+
+const users = [
+  ...new Set(
+    visits.value?.map((visit: Visit, index: number) => visit.agent.name)
+  ),
+].map((username: string, index: number) => ({
+  name: username,
+  color: graphColors[index],
+}));
 </script>

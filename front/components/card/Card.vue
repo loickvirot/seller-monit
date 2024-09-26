@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white border p-4 rounded-xl">
+  <div class="bg-white border rounded-xl">
     <slot></slot>
   </div>
 </template>
