@@ -5,13 +5,15 @@
     </div>
     <div class="w-full flex divide-x">
       <div class="w-full">
-        <apexchart
-          width="100%"
-          height="75%"
-          type="rangeBar"
-          :options="options"
-          :series="getSerie(user)"
-        ></apexchart>
+        <client-only>
+          <vue-apex-charts
+            width="100%"
+            height="75%"
+            type="rangeBar"
+            :options="options"
+            :series="getSerie(user)"
+          ></vue-apex-charts>
+        </client-only>
       </div>
       <div class="flex p-4">
         <div class="m-auto w-64 text-right">11h22</div>
@@ -22,6 +24,7 @@
 
 <script setup lang="ts">
 import colors from "tailwindcss/colors";
+import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
   user: {
