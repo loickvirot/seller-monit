@@ -11,20 +11,14 @@
             ></InputOption>
           </InputDefaultSelect>
           <div class="flex space-x-4">
-            <client-only>
-              <vue-tailwind-datepicker
-                i18n="fr"
-                v-model="dateValue"
-                :formatter="formater"
-                :placeholder="getPlaceholder()"
-                as-single
-              />
-            </client-only>
+            <InputDatePicker v-model="dateValue" />
           </div>
         </div>
         <div class="border-b"></div>
         <div v-if="getUsersVisits().length == 0" class="p-4">
-          <div class="bg-blue-100 p-4 text-blue-700 rounded-md border border-blue-300 flex space-x-4">
+          <div
+            class="bg-blue-100 p-4 text-blue-700 rounded-md border border-blue-300 flex space-x-4"
+          >
             <font-awesome class="my-auto" :icon="['fas', 'circle-info']" />
             <span>No data</span>
           </div>
@@ -50,14 +44,6 @@ import TeamTimelineItem from "~/components/graph/TeamTimelineItem.vue";
 import colors from "tailwindcss/colors";
 
 const dateValue = ref(dayjs(Date.now()).format("DD MMM YYYY"));
-const formater = ref({
-  date: "DD MMM YYYY",
-  month: "MMM",
-});
-
-function getPlaceholder(): string {
-  return dateValue.value;
-}
 
 interface Team {
   id: number;
@@ -79,8 +65,7 @@ interface Visit {
 const { data: teams } = await useFetch<Team[]>("http://localhost:3001/team");
 
 const selectedTeam = ref(teams.value ? teams.value[0].id.toString() : "");
-watch(selectedTeam, (v: string) => {
-});
+watch(selectedTeam, (v: string) => {});
 
 const { data: visits } = await useAsyncData<Visit[]>(
   "visits",
@@ -90,8 +75,8 @@ const { data: visits } = await useAsyncData<Visit[]>(
       baseURL: "http://localhost:3001",
       params: {
         team: selectedTeam.value,
-        date: dateValue.value
-      }
+        date: dateValue.value,
+      },
     }),
   {
     watch: [selectedTeam, dateValue],
@@ -107,9 +92,7 @@ const graphColors = [
 
 function getUsersVisits() {
   return [
-    ...new Set(
-      visits.value?.map((visit: Visit) => visit.agent.name)
-    ),
+    ...new Set(visits.value?.map((visit: Visit) => visit.agent.name)),
   ].map((username: string, index: number) => ({
     name: username,
     color: graphColors[index],
