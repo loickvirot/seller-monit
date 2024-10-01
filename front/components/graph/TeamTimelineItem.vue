@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div class="flex px-4 font-bold border-b py-1 px-4">
-      {{ user }}
+    <div class="flex justify-between border-b py-1 px-4">
+      <h2 class="font-bold text-sm my-auto">{{ user }}</h2>
+      <div class="space-x-2">
+        <InputDefaultButtonLink href="#" label="Agenda" small />
+        <InputDefaultButtonLink href="#" label="Roadmap" small />
+      </div>
     </div>
     <div class="w-full flex divide-x">
       <div class="w-full">
@@ -25,6 +29,7 @@
 <script setup lang="ts">
 import colors from "tailwindcss/colors";
 import VueApexCharts from "vue3-apexcharts";
+import DefaultButton from "../input/DefaultButton.vue";
 
 const props = defineProps({
   user: {
