@@ -25,7 +25,7 @@
         <div class="border-b"></div>
         <div class="divide-y">
           <TeamTimelineItem
-            v-for="user in users"
+            v-for="user in getUsersVisits()"
             :key="user.name"
             :user="user.name"
             :visits="visits ?? []"
@@ -80,12 +80,9 @@ watch(selectedTeam, (v: string) => {
 const { data: visits } = await useAsyncData<Visit[]>(
   "cafes",
   () =>
-    $fetch(`/visit`, {
+    $fetch(`/visit/team/${selectedTeam.value}`, {
       method: "GET",
       baseURL: "http://localhost:3001",
-      params: {
-        team: selectedTeam.value,
-      },
     }),
   {
     watch: [selectedTeam],
@@ -99,12 +96,14 @@ const graphColors = [
   colors.green[700],
 ];
 
-const users = [
-  ...new Set(
-    visits.value?.map((visit: Visit, index: number) => visit.agent.name)
-  ),
-].map((username: string, index: number) => ({
-  name: username,
-  color: graphColors[index],
-}));
+function getUsersVisits() {
+  return [
+    ...new Set(
+      visits.value?.map((visit: Visit) => visit.agent.name)
+    ),
+  ].map((username: string, index: number) => ({
+    name: username,
+    color: graphColors[index],
+  }));
+}
 </script>

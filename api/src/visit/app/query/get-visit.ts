@@ -8,3 +8,8 @@ export const getVisit = async (
   repository: VisitRetriever,
   id: number
 ): Promise<Visit> => repository.get(id);
+
+export const getVisitsByTeam = async (
+  repository: VisitRetriever,
+  id: number
+): Promise<Visit[]> => repository.getTeamVisits(id);

@@ -1,6 +1,7 @@
 import express, { type Request, type Response } from "express";
 import { teamQuery } from "../query/get-team";
-import { agentQuery } from "../query/get-agent";
+import { getAgentsByTeam } from "../../app/query/get-agent";
+import { agentRetriever } from "../repository/agent-retriever";
 
 export const router = express.Router();
 
@@ -23,6 +24,14 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
 });
 
 router.get("/:id/agent", async (req: Request, res: Response): Promise<void> => {
+  const id = Number(req.params.id);
+
+  if (isNaN(id)) {
+    res.status(400);
+    res.json("Bad request");
+    return;
+  }
+
   res.status(200);
-  res.json(await agentQuery.getAll());
+  res.json(await getAgentsByTeam(agentRetriever, id));
 });

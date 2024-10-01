@@ -18,13 +18,26 @@ export const agentRetriever: AgentRetriever = {
       WHERE team.id = agent.team"
     );
 
-    return res.rows.map((row: GetAllRow) => ({
-      id: row.id,
-      name: row.name,
-      team: {
-        id: row.team_id,
-        name: row.team_name,
-      },
-    }));
+    return res.rows.map((row: GetAllRow) => rowToAgent(row));
   },
+  getAllByTeam: async (id: number): Promise<Agent[]> => {
+    const res = await executeRequest<GetAllRow>(
+      "SELECT agent.id, agent.name, team.id as team_id, team.name as team_name \
+      FROM agent, team \
+      WHERE team.id = $1 \
+      AND team.id = agent.team",
+      [ id ]
+    );
+
+    return res.rows.map((row: GetAllRow) => rowToAgent(row));
+  }
 };
+
+const rowToAgent = (row: GetAllRow) => ({
+  id: row.id,
+  name: row.name,
+  team: {
+    id: row.team_id,
+    name: row.team_name,
+  },
+})

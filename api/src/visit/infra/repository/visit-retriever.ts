@@ -28,6 +28,7 @@ export const visitRetriever: VisitRetriever = {
     const data = res.rows[0];
     return rowToVisit(data);
   },
+  
   getAll: async (): Promise<Visit[]> => {
     const res = await executeRequest<VisitRow>(
       "SELECT visit.*, agent.name as agent_name, team.name as team_name, team.id as team_id \
@@ -37,6 +38,18 @@ export const visitRetriever: VisitRetriever = {
     );
     return res.rows.map((row: VisitRow) => rowToVisit(row));
   },
+  
+  getTeamVisits: async (id: number): Promise<Visit[]> => {
+    const res = await executeRequest<VisitRow>(
+      "SELECT visit.*, agent.name as agent_name, team.name as team_name, team.id as team_id \
+      FROM visit, agent, team \
+      WHERE team.id = $1 \
+      AND visit.agent = agent.id \
+      AND agent.team = team.id", 
+      [ id ]
+    );
+    return res.rows.map((row: VisitRow) => rowToVisit(row));
+  }
 };
 
 const rowToVisit = (row: VisitRow): Visit => ({
