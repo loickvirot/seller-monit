@@ -15,7 +15,7 @@ export default defineNuxtConfig({
 
   fontawesome: {
     icons: {
-      solid: ["arrow-left", "arrow-right"],
+      solid: ["arrow-left", "arrow-right", "circle-info"],
     },
   },
 

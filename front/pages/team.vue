@@ -23,7 +23,13 @@
           </div>
         </div>
         <div class="border-b"></div>
-        <div class="divide-y">
+        <div v-if="getUsersVisits().length == 0" class="p-4">
+          <div class="bg-blue-100 p-4 text-blue-700 rounded-md border border-blue-300 flex space-x-4">
+            <font-awesome class="my-auto" :icon="['fas', 'circle-info']" />
+            <span>No data</span>
+          </div>
+        </div>
+        <div class="divide-y" v-if="!!getUsersVisits()">
           <TeamTimelineItem
             v-for="user in getUsersVisits()"
             :key="user.name"
