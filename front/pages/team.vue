@@ -74,7 +74,6 @@ const { data: teams } = await useFetch<Team[]>("http://localhost:3001/team");
 
 const selectedTeam = ref(teams.value ? teams.value[0].id.toString() : "");
 watch(selectedTeam, (v: string) => {
-  console.log(v);
 });
 
 const { data: visits } = await useAsyncData<Visit[]>(
@@ -84,11 +83,12 @@ const { data: visits } = await useAsyncData<Visit[]>(
       method: "GET",
       baseURL: "http://localhost:3001",
       params: {
-        team: selectedTeam.value
+        team: selectedTeam.value,
+        date: dateValue.value
       }
     }),
   {
-    watch: [selectedTeam],
+    watch: [selectedTeam, dateValue],
   }
 );
 

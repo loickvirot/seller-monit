@@ -11,7 +11,7 @@ const createClient = (): Client =>
 
 export const executeRequest = async <T extends QueryResultRow>(
   request: string,
-  params: [number | string] | [] = []
+  params: (number | string)[] | [] = []
 ): Promise<QueryResult<T>> => {
   const client = createClient();
   await client.connect();

@@ -6,9 +6,9 @@ import { visitRetriever } from "../repository/visit-retriever";
 export const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
-  const { team } = req.query;
+  const { team, date } = req.query;
 
-  if (team) {
+  if (team && date) {
     await returnVisitsByTeam(req, res)
     return;
   }
@@ -32,13 +32,22 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 const returnVisitsByTeam = async (req: Request, res: Response) => {
   const id = Number(req.query.team);
-  
+  const dateParam = Date.parse(req.query.date as string)
+
   if (isNaN(id)) {
     res.status(400);
     res.json("Bad request");
     return;
   }
 
+  if (isNaN(dateParam)) {
+    res.status(400);
+    res.json("Bad request");
+    return;
+  }
+
+  const date = new Date(dateParam)
+
   res.status(200);
-  res.json(await getVisitsByTeam(visitRetriever, id));
+  res.json(await getVisitsByTeam(visitRetriever, id, date));
 }

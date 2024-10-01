@@ -11,5 +11,6 @@ export const getVisit = async (
 
 export const getVisitsByTeam = async (
   repository: VisitRetriever,
-  id: number
-): Promise<Visit[]> => repository.getTeamVisits(id);
+  id: number,
+  date: Date
+): Promise<Visit[]> => repository.getTeamVisitsByDate(id, date);

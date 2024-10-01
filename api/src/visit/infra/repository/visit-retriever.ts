@@ -28,7 +28,7 @@ export const visitRetriever: VisitRetriever = {
     const data = res.rows[0];
     return rowToVisit(data);
   },
-  
+
   getAll: async (): Promise<Visit[]> => {
     const res = await executeRequest<VisitRow>(
       "SELECT visit.*, agent.name as agent_name, team.name as team_name, team.id as team_id \
@@ -39,14 +39,17 @@ export const visitRetriever: VisitRetriever = {
     return res.rows.map((row: VisitRow) => rowToVisit(row));
   },
   
-  getTeamVisits: async (id: number): Promise<Visit[]> => {
+  getTeamVisitsByDate: async (id: number, date: Date): Promise<Visit[]> => {
+    const dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     const res = await executeRequest<VisitRow>(
       "SELECT visit.*, agent.name as agent_name, team.name as team_name, team.id as team_id \
       FROM visit, agent, team \
       WHERE team.id = $1 \
+      AND visit.start >= $2::date \
+      AND visit.end <= $2::date + '1 day'::interval \
       AND visit.agent = agent.id \
       AND agent.team = team.id", 
-      [ id ]
+      [ id, dateStr ]
     );
     return res.rows.map((row: VisitRow) => rowToVisit(row));
   }
