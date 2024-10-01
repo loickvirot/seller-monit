@@ -78,11 +78,14 @@ watch(selectedTeam, (v: string) => {
 });
 
 const { data: visits } = await useAsyncData<Visit[]>(
-  "cafes",
+  "visits",
   () =>
-    $fetch(`/visit/team/${selectedTeam.value}`, {
+    $fetch(`/visit`, {
       method: "GET",
       baseURL: "http://localhost:3001",
+      params: {
+        team: selectedTeam.value
+      }
     }),
   {
     watch: [selectedTeam],
